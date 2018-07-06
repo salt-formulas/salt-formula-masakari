@@ -1,0 +1,46 @@
+applications:
+- masakari
+parameters:
+  masakari:
+    server:
+      enabled: true
+      version: ${_param:masakari_version}
+      debug: false
+      api:
+        address: ${_param:cluster_local_address}
+        port: 15868
+      cache:
+        engine: memcached
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 11211
+        - host: ${_param:cluster_node02_address}
+          port: 11211
+        - host: ${_param:cluster_node03_address}
+          port: 11211
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        port: 3306
+        name: masakari
+        user: masakari
+        password: ${_param:mysql_masakari_password}
+      identity:
+        engine: keystone
+        protocol: http
+        host: ${_param:cluster_vip_address}
+        port: 35357
+        user: masakari
+        password: ${_param:keystone_masakari_password}
+        tenant: service
+        region: ${_param:openstack_region}
+      message_queue:
+        engine: rabbitmq
+        port: 5672
+        user: openstack
+        password: ${_param:rabbitmq_openstack_password}
+        virtual_host: '/openstack'
+        members:
+          - host: ${_param:openstack_message_queue_node01_address}
+          - host: ${_param:openstack_message_queue_node02_address}
+          - host: ${_param:openstack_message_queue_node03_address}

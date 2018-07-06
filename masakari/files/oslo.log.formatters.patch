@@ -1,0 +1,11 @@
+--- formatters.py.orig  2017-03-17 12:38:45.180893875 +0000
++++ formatters.py       2017-03-17 12:08:31.618505386 +0000
+@@ -270,7 +270,7 @@
+
+         if six.PY2:
+             should_use_unicode = True
+-            for arg in record.args:
++            for arg in record.args or []:
+                 try:
+                     six.text_type(arg)
+                 except UnicodeDecodeError:

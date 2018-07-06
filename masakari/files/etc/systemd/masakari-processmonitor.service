@@ -1,0 +1,14 @@
+[Unit]
+Description=Masakari Process Monitor
+After=network.target syslog.target
+
+[Service]
+Environment=CONFIG=/etc/masakarimonitors/masakarimonitors.conf
+ExecStartPre=/bin/bash -c 'for i in lock run log lib ; do mkdir -p /var/$i/masakari ; chown masakari /var/$i/masakari ; done'
+ExecStart=/usr/local/virtualenvs/masakarimonitor/bin/masakari-processmonitor --config-file ${CONFIG} --log-file=/var/log/masakari/masakari-processmonitor.log $EXTRAOPTS
+Restart=always
+LimitNOFILE=65535
+
+
+[Install]
+WantedBy=multi-user.target
