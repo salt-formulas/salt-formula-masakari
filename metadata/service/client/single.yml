@@ -1,0 +1,6 @@
+applications:
+- masakari
+parameters:
+  masakari:
+    client:
+      enabled: true
